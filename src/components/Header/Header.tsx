@@ -11,7 +11,7 @@ const Header = () => (
     }}
   >
     <Paragraph style={{ fontWeight: '500', fontSize: designTokens.fontSize.l }}>
-      Music Barcode Scanner
+      Music Scanner
     </Paragraph>
   </View>
 );

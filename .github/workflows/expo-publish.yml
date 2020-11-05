@@ -16,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [14.x]
 
     steps:
     - uses: actions/checkout@v2
@@ -24,9 +24,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - name: Install Expo CLI
+      run: npm i -g expo-cli
     - name: Login to Expo
-      run: npx expo login --non-interactive -u $EXPO_CLI_USERNAME
+      run: expo login --non-interactive -u $EXPO_CLI_USERNAME
     - name: Install dependencies
       run: npm ci
     - name: Publish to Expo
-      run: npx expo publish
+      run: expo publish
