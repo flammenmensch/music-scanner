@@ -1,9 +1,11 @@
 {
   "expo": {
-    "name": "music-scanner",
+    "name": "Music Scanner",
+    "description": "A simple barcode scanner app to help me organize my music collection",
     "slug": "music-scanner",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "githubUrl": "https://github.com/flammenmensch/music-scanner",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",

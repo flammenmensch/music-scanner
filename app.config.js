@@ -4,8 +4,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export default ({ config }) => {
-  console.log('@@@@@@@@@@@@@@', process.env);
-
   return {
     ...config,
     version: packageJson.version,
