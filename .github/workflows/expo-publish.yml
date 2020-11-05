@@ -24,11 +24,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: Install Expo CLI
-      run: npm i -g expo-cli
     - name: Login to Expo
-      run: expo login --non-interactive -u $EXPO_CLI_USERNAME
+      run: npx expo login --non-interactive -u flammenmensch
     - name: Install dependencies
       run: npm ci
     - name: Publish to Expo
-      run: expo publish
+      run: npx expo publish --non-interactive
