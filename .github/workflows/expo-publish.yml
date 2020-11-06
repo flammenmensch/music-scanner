@@ -19,3 +19,6 @@ jobs:
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
       - run: npm ci
       - run: expo publish
+        env:
+          CONSUMER_KEY: ${{ secrets.CONSUMER_KEY }}
+          CONSUMER_SECRET: ${{ secrets.CONSUMER_SECRET }}
