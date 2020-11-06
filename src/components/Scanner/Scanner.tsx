@@ -1,11 +1,13 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
-import designTokens from '../../constants/designTokens';
 import Paragraph from '../Paragraph/Paragraph';
+import Template from '../Template/Template';
+import PrimaryButton from '../PrimaryButton/PrimaryButton';
 
 interface Props {
   onScanned: (barcode: string) => void;
+  onManualSearch: () => void;
 }
 
 const Scanner = (props: Props) => {
@@ -17,30 +19,26 @@ const Scanner = (props: Props) => {
   );
 
   return (
-    <React.Fragment>
-      <View
-        style={{
-          width: 256,
-          height: 256,
-          borderWidth: 1,
-          marginBottom: designTokens.gap.m,
-          borderColor: designTokens.colors.accent,
-        }}
-      >
+    <Template
+      renderImage={() => (
         <BarCodeScanner
           onBarCodeScanned={handleScanned}
           style={StyleSheet.absoluteFill}
         />
-      </View>
-      <Paragraph
-        style={{
-          textAlign: 'center',
-          marginBottom: designTokens.gap.l,
-        }}
-      >
-        Scan a Barcode to search
-      </Paragraph>
-    </React.Fragment>
+      )}
+      renderLabel={() => (
+        <Paragraph
+          style={{
+            textAlign: 'center',
+          }}
+        >
+          Scan a Barcode to search
+        </Paragraph>
+      )}
+      renderFooter={() => (
+        <PrimaryButton label="Manual search" onPress={props.onManualSearch} />
+      )}
+    />
   );
 };
 

@@ -46,6 +46,10 @@ const App = () => {
     setSearching(false);
   }, []);
 
+  const handleManualSearch = React.useCallback(() => {
+    console.log('Manual search');
+  }, []);
+
   return (
     <SafeAreaView
       style={{
@@ -76,7 +80,10 @@ const App = () => {
         {hasPermission === true && (
           <React.Fragment>
             {!album && !searching && (
-              <Scanner onScanned={handleBarCodeScanned} />
+              <Scanner
+                onScanned={handleBarCodeScanned}
+                onManualSearch={handleManualSearch}
+              />
             )}
             {album && (
               <AlbumPreview
