@@ -14,6 +14,7 @@ const Loader = () => (
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
+            borderRadius: designTokens.borderRadius,
             backgroundColor: designTokens.colors.tertiary,
           },
         ]}
@@ -26,6 +27,7 @@ const Loader = () => (
         style={{
           width: 256,
           height: designTokens.fontSize.m,
+          borderRadius: designTokens.borderRadius,
           backgroundColor: designTokens.colors.tertiary,
         }}
       />

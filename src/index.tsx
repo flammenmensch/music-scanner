@@ -9,7 +9,7 @@ import AlbumPreview from './components/AlbumPreview/AlbumPreview';
 import { search } from './services/api';
 import Scanner from './components/Scanner/Scanner';
 import Loader from './components/Loader/Loader';
-import { Album } from './types';
+import { ReleasePreview } from './types';
 import Header from './components/Header/Header';
 import Paragraph from './components/Paragraph/Paragraph';
 
@@ -20,7 +20,7 @@ const requestCameraAccess = () =>
 
 const App = () => {
   const [searching, setSearching] = React.useState(false);
-  const [album, setAlbum] = React.useState<Album | null>(null);
+  const [album, setAlbum] = React.useState<ReleasePreview | null>(null);
   const [hasPermission, setHasPermission] = React.useState<boolean | null>(
     null
   );

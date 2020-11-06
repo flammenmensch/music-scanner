@@ -11,7 +11,7 @@ interface Props {
 
 const IconButton = (props: Props) => (
   <TouchableOpacity onPress={props.onPress} style={props.style}>
-    <MaterialIcons name={props.name} size={32} color={props.color} />
+    <MaterialIcons name={props.name} size={24} color={props.color} />
   </TouchableOpacity>
 );
 

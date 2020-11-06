@@ -9,9 +9,14 @@ const SecondaryButton = (props: { label: string; onPress: () => void }) => (
     style={{
       borderWidth: 1,
       minWidth: 200,
-      padding: designTokens.gap.m,
+      height: 64,
+      paddingLeft: designTokens.gap.m,
+      paddingRight: designTokens.gap.m,
       borderColor: designTokens.colors.accent,
-      borderRadius: designTokens.borderRadius,
+      borderRadius: 64,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
     }}
   >
     <Paragraph

@@ -1,5 +1,5 @@
 export default {
-  borderRadius: 4,
+  borderRadius: 8,
   colors: {
     black: '#000',
     primary: '#fff',

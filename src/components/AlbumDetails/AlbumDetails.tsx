@@ -1,17 +1,42 @@
 import React from 'react';
-import { Album } from '../../types';
-import { Image, SafeAreaView, useWindowDimensions, View } from 'react-native';
+import { Album, Release } from '../../types';
+import {
+  ActivityIndicator,
+  Image,
+  ScrollView,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import designTokens from '../../constants/designTokens';
 import Paragraph from '../Paragraph/Paragraph';
 import { LinearGradient } from 'expo-linear-gradient';
 import Gap from '../Gap/Gap';
+import { releaseInfo } from '../../services/api';
 
 interface Props {
   album: Album;
 }
 
+const getArtists = (release: Release) =>
+  release.artists.map((a) => a.name).join(', ');
+
+const getGenres = (release: Release) => release.genres.join(', ');
+
 const AlbumDetails = (props: Props) => {
   const dimensions = useWindowDimensions();
+  const [loading, setLoading] = React.useState(false);
+  const [release, setRelease] = React.useState<Release | null>(null);
+  const { id } = props.album;
+
+  React.useEffect(() => {
+    setLoading(true);
+    releaseInfo(id)
+      .then((response) => {
+        setRelease(response);
+      })
+      .finally(() => setLoading(false));
+  }, [id]);
 
   return (
     <View style={{ flexGrow: 1 }}>
@@ -24,12 +49,12 @@ const AlbumDetails = (props: Props) => {
           }}
         />
         <LinearGradient
-          colors={[designTokens.colors.black, 'transparent']}
+          colors={['rgba(0, 0, 0, 0.1)', designTokens.colors.secondary]}
           style={{
             position: 'absolute',
             top: 0,
+            bottom: 0,
             width: dimensions.width,
-            height: 128,
           }}
         />
       </View>
@@ -40,21 +65,47 @@ const AlbumDetails = (props: Props) => {
           flexGrow: 1,
         }}
       >
-        <Paragraph
-          style={{
-            fontSize: designTokens.fontSize.l,
-            fontWeight: '500',
-          }}
-        >
-          {props.album.title}
-        </Paragraph>
-        <Gap height={designTokens.gap.m} />
-        <Paragraph>Release year: {props.album.year}</Paragraph>
-        {props.album.style.length > 0 && (
-          <Paragraph>Styles: {props.album.style.join(', ')}</Paragraph>
-        )}
-        {props.album.genre.length > 0 && (
-          <Paragraph>Genres: {props.album.genre.join(', ')}</Paragraph>
+        {loading && <ActivityIndicator />}
+        {release && (
+          <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
+            <Paragraph
+              style={{
+                fontSize: designTokens.fontSize.l,
+                fontWeight: '600',
+                textAlign: 'center',
+              }}
+            >
+              {release.title}
+            </Paragraph>
+            <Paragraph
+              style={{
+                textAlign: 'center',
+                color: designTokens.colors.accent,
+                fontSize: designTokens.fontSize.m,
+              }}
+            >
+              {getArtists(release)}
+            </Paragraph>
+            <Gap height={designTokens.gap.s} />
+            <Paragraph
+              style={{
+                textTransform: 'uppercase',
+                textAlign: 'center',
+                fontSize: designTokens.fontSize.s,
+              }}
+            >
+              {getGenres(release)} ・ {release.year}
+            </Paragraph>
+            <Gap height={designTokens.gap.l} />
+            <Paragraph
+              style={{
+                fontSize: designTokens.fontSize.s,
+              }}
+            >
+              {release.notes}
+            </Paragraph>
+            <Gap height={designTokens.gap.l} />
+          </ScrollView>
         )}
       </View>
     </View>

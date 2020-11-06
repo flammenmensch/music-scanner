@@ -7,10 +7,13 @@ const PrimaryButton = (props: { label: string; onPress: () => void }) => (
   <TouchableOpacity
     onPress={props.onPress}
     style={{
-      padding: designTokens.gap.m,
+      height: 64,
       minWidth: 200,
-      borderRadius: designTokens.borderRadius,
       backgroundColor: designTokens.colors.accent,
+      borderRadius: 64,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
     }}
   >
     <Paragraph

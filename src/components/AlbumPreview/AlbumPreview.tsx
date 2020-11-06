@@ -34,7 +34,10 @@ const AlbumPreview = (props: Props) => {
               progressiveRenderingEnabled={true}
               loadingIndicatorSource={{ uri: props.album.thumb }}
               source={{ uri: props.album.cover_image }}
-              style={StyleSheet.absoluteFill}
+              style={[
+                StyleSheet.absoluteFill,
+                { borderRadius: designTokens.borderRadius },
+              ]}
             />
           </TouchableWithoutFeedback>
         )}
@@ -71,7 +74,7 @@ const AlbumPreview = (props: Props) => {
           style={{
             position: 'absolute',
             top: designTokens.gap.l * 2,
-            right: designTokens.gap.l,
+            right: 24,
           }}
         />
       </Modal>
