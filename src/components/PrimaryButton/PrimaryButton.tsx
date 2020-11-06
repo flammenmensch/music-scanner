@@ -11,7 +11,6 @@ const PrimaryButton = (props: { label: string; onPress: () => void }) => (
       minWidth: 200,
       borderRadius: designTokens.borderRadius,
       backgroundColor: designTokens.colors.accent,
-      marginBottom: designTokens.gap.m,
     }}
   >
     <Paragraph

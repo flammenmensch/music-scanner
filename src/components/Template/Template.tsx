@@ -14,6 +14,7 @@ const Template = (props: Props) => (
       style={{
         width: 256,
         height: 256,
+        alignSelf: 'center',
         marginBottom: designTokens.gap.m,
       }}
     >
@@ -22,6 +23,7 @@ const Template = (props: Props) => (
     <View
       style={{
         marginBottom: designTokens.gap.m,
+        alignSelf: 'center',
       }}
     >
       {props.renderLabel()}

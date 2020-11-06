@@ -19,5 +19,6 @@ export default {
     s: 12,
     m: 18,
     l: 24,
+    xl: 32,
   },
 };
