@@ -22,6 +22,8 @@ const Template = (props: Props) => (
     </View>
     <View
       style={{
+        paddingLeft: designTokens.gap.m,
+        paddingRight: designTokens.gap.m,
         marginBottom: designTokens.gap.m,
         alignSelf: 'center',
       }}

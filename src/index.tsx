@@ -1,17 +1,19 @@
 import registerRootComponent from 'expo/build/launch/registerRootComponent';
 
 import React from 'react';
-import { Button, SafeAreaView, View } from 'react-native';
+import { Button, Modal, SafeAreaView, View } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import designTokens from './constants/designTokens';
 import Logo from './components/Logo/Logo';
 import AlbumPreview from './components/AlbumPreview/AlbumPreview';
-import { search } from './services/api';
 import Scanner from './components/Scanner/Scanner';
 import Loader from './components/Loader/Loader';
 import { ReleasePreview } from './types';
 import Header from './components/Header/Header';
 import Paragraph from './components/Paragraph/Paragraph';
+import { search } from './services/api';
+import { save as saveScan } from './services/scanHistory';
+import ScanHistory from './components/ScanHistory/ScanHistory';
 
 const requestCameraAccess = () =>
   BarCodeScanner.requestPermissionsAsync().then(
@@ -24,6 +26,7 @@ const App = () => {
   const [hasPermission, setHasPermission] = React.useState<boolean | null>(
     null
   );
+  const [showingHistory, setShowingHistory] = React.useState(false);
 
   React.useEffect(() => {
     requestCameraAccess().then((granted) => setHasPermission(granted));
@@ -36,7 +39,10 @@ const App = () => {
   const handleBarCodeScanned = React.useCallback((barcode) => {
     setSearching(true);
     search(barcode)
-      .then((response) => setAlbum(response))
+      .then((response) => {
+        setAlbum(response);
+        return saveScan(response);
+      })
       .catch(console.error)
       .finally(() => setSearching(false));
   }, []);
@@ -61,7 +67,11 @@ const App = () => {
         backgroundColor: designTokens.colors.secondary,
       }}
     >
-      <Header />
+      <Header
+        title="music scanner"
+        rightIconName="history"
+        onRightIconPress={() => setShowingHistory(true)}
+      />
       <View
         style={{
           paddingTop: designTokens.gap.l,
@@ -79,7 +89,7 @@ const App = () => {
         )}
         {hasPermission === true && (
           <React.Fragment>
-            {!album && !searching && (
+            {!album && !searching && !showingHistory && (
               <Scanner
                 onScanned={handleBarCodeScanned}
                 onManualSearch={handleManualSearch}
@@ -97,6 +107,23 @@ const App = () => {
         )}
       </View>
       <Logo />
+      <Modal
+        removeClippedSubviews={true}
+        visible={showingHistory}
+        animationType="slide"
+        style={{
+          position: 'relative',
+          backgroundColor: designTokens.colors.secondary,
+        }}
+      >
+        <ScanHistory
+          onSelect={(album) => {
+            setAlbum(album);
+            setShowingHistory(false);
+          }}
+          onClose={() => setShowingHistory(false)}
+        />
+      </Modal>
     </SafeAreaView>
   );
 };

@@ -4,7 +4,18 @@ import Paragraph from '../Paragraph/Paragraph';
 import designTokens from '../../constants/designTokens';
 import IconButton from '../IconButton/IconButton';
 
-const Header = () => (
+interface Props {
+  title: string;
+  rightIconName: undefined;
+}
+
+interface PropsWithRightIcon {
+  title: string;
+  rightIconName: string;
+  onRightIconPress: () => void;
+}
+
+const Header = (props: Props | PropsWithRightIcon) => (
   <View
     style={{
       padding: designTokens.gap.m,
@@ -22,17 +33,19 @@ const Header = () => (
         fontSize: designTokens.fontSize.l,
       }}
     >
-      music scanner
+      {props.title}
     </Paragraph>
-    <IconButton
-      name="history"
-      color={designTokens.colors.primary}
-      onPress={console.log}
-      style={{
-        position: 'absolute',
-        right: designTokens.gap.m,
-      }}
-    />
+    {props.rightIconName && (
+      <IconButton
+        name={props.rightIconName}
+        color={designTokens.colors.primary}
+        onPress={props.onRightIconPress}
+        style={{
+          position: 'absolute',
+          right: designTokens.gap.m,
+        }}
+      />
+    )}
   </View>
 );
 

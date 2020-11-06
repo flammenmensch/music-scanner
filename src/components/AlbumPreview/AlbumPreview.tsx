@@ -1,4 +1,5 @@
 import {
+  Animated,
   Image,
   Modal,
   StyleSheet,
@@ -23,18 +24,46 @@ interface Props {
 const AlbumPreview = (props: Props) => {
   const [showDetails, setShowDetails] = React.useState(false);
 
+  const animatedValue = React.useRef(new Animated.Value(1)).current;
+
+  const handlePressIn = React.useCallback(() => {
+    Animated.timing(animatedValue, {
+      toValue: 0.95,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  }, [animatedValue]);
+
+  const handlePressOut = React.useCallback(() => {
+    Animated.spring(animatedValue, {
+      toValue: 1,
+      friction: 3,
+      tension: 40,
+      useNativeDriver: true,
+    }).start();
+  }, [animatedValue]);
+
+  const handlePress = React.useCallback(() => setShowDetails(true), []);
+
   return (
     <React.Fragment>
       <Template
         renderImage={() => (
-          <TouchableWithoutFeedback onPress={() => setShowDetails(true)}>
-            <Image
+          <TouchableWithoutFeedback
+            onPress={handlePress}
+            onPressIn={handlePressIn}
+            onPressOut={handlePressOut}
+          >
+            <Animated.Image
               progressiveRenderingEnabled={true}
               loadingIndicatorSource={{ uri: props.album.thumb }}
               source={{ uri: props.album.cover_image }}
               style={[
                 StyleSheet.absoluteFill,
                 { borderRadius: designTokens.borderRadius },
+                {
+                  transform: [{ scale: animatedValue }],
+                },
               ]}
             />
           </TouchableWithoutFeedback>
