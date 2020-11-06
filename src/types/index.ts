@@ -28,4 +28,5 @@ export interface Release {
   notes: string;
   styles: Array<string>;
   genres: Array<string>;
+  uri: string;
 }

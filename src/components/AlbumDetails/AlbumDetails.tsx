@@ -1,10 +1,10 @@
 import React from 'react';
-import { Album, Release } from '../../types';
+import { Release, ReleasePreview } from '../../types';
 import {
   ActivityIndicator,
   Image,
   ScrollView,
-  StyleSheet,
+  Share,
   useWindowDimensions,
   View,
 } from 'react-native';
@@ -13,9 +13,11 @@ import Paragraph from '../Paragraph/Paragraph';
 import { LinearGradient } from 'expo-linear-gradient';
 import Gap from '../Gap/Gap';
 import { releaseInfo } from '../../services/api';
+import IconButton from '../IconButton/IconButton';
 
 interface Props {
-  album: Album;
+  album: ReleasePreview;
+  onClose: () => void;
 }
 
 const getArtists = (release: Release) =>
@@ -38,8 +40,15 @@ const AlbumDetails = (props: Props) => {
       .finally(() => setLoading(false));
   }, [id]);
 
+  const handleShare = React.useCallback(() => {
+    return Share.share(
+      { url: release!.uri },
+      { tintColor: designTokens.colors.secondary }
+    ).catch(console.error);
+  }, [release]);
+
   return (
-    <View style={{ flexGrow: 1 }}>
+    <View style={{ position: 'relative', flexGrow: 1 }}>
       <View style={{ position: 'relative' }}>
         <Image
           source={{ uri: props.album.cover_image }}
@@ -108,6 +117,28 @@ const AlbumDetails = (props: Props) => {
           </ScrollView>
         )}
       </View>
+      {release && (
+        <IconButton
+          name="share"
+          color={designTokens.colors.primary}
+          onPress={handleShare}
+          style={{
+            position: 'absolute',
+            top: designTokens.gap.l * 2,
+            left: designTokens.gap.l,
+          }}
+        />
+      )}
+      <IconButton
+        name="close"
+        color={designTokens.colors.primary}
+        onPress={props.onClose}
+        style={{
+          position: 'absolute',
+          top: designTokens.gap.l * 2,
+          right: designTokens.gap.l,
+        }}
+      />
     </View>
   );
 };

@@ -3,9 +3,12 @@ import Constants from 'expo-constants';
 
 const BASE_URL = 'https://api.discogs.com';
 
-const createAuthorizationHeader = () => ({
-  Authorization: `Discogs key=${Constants.manifest.extra.CONSUMER_KEY}, secret=${Constants.manifest.extra.CONSUMER_SECRET}`,
-});
+const createAuthorizationHeader = () => {
+  const { CONSUMER_KEY, CONSUMER_SECRET } = Constants.manifest.extra;
+  return {
+    Authorization: `Discogs key=${CONSUMER_KEY}, secret=${CONSUMER_SECRET}`,
+  };
+};
 
 const api = (url: string) =>
   fetch(`${BASE_URL}${url}`, {

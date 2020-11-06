@@ -2,6 +2,9 @@ import React from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import designTokens from '../../constants/designTokens';
 import Template from '../Template/Template';
+import FakeButton from '../FakeButton/FakeButton';
+import Gap from '../Gap/Gap';
+import Paragraph from '../Paragraph/Paragraph';
 
 const Loader = () => (
   <Template
@@ -23,14 +26,20 @@ const Loader = () => (
       </View>
     )}
     renderLabel={() => (
-      <View
+      <Paragraph
         style={{
-          width: 256,
-          height: designTokens.fontSize.m,
-          borderRadius: designTokens.borderRadius,
-          backgroundColor: designTokens.colors.tertiary,
+          textAlign: 'center',
         }}
-      />
+      >
+        Searching...
+      </Paragraph>
+    )}
+    renderFooter={() => (
+      <React.Fragment>
+        <FakeButton />
+        <Gap height={designTokens.gap.m} />
+        <FakeButton />
+      </React.Fragment>
     )}
   />
 );

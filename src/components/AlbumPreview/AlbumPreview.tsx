@@ -3,21 +3,19 @@ import {
   Modal,
   StyleSheet,
   TouchableWithoutFeedback,
-  View,
 } from 'react-native';
 import React from 'react';
 import Paragraph from '../Paragraph/Paragraph';
-import { Album } from '../../types';
+import { ReleasePreview } from '../../types';
 import Template from '../Template/Template';
 import PrimaryButton from '../PrimaryButton/PrimaryButton';
 import SecondaryButton from '../SecondaryButton/SecondaryButton';
 import AlbumDetails from '../AlbumDetails/AlbumDetails';
 import designTokens from '../../constants/designTokens';
 import Gap from '../Gap/Gap';
-import IconButton from '../IconButton/IconButton';
 
 interface Props {
-  album: Album;
+  album: ReleasePreview;
   onAdd: () => void;
   onClear: () => void;
 }
@@ -66,16 +64,9 @@ const AlbumPreview = (props: Props) => {
           backgroundColor: designTokens.colors.secondary,
         }}
       >
-        <AlbumDetails album={props.album} />
-        <IconButton
-          name="close"
-          color={designTokens.colors.primary}
-          onPress={() => setShowDetails(false)}
-          style={{
-            position: 'absolute',
-            top: designTokens.gap.l * 2,
-            right: 24,
-          }}
+        <AlbumDetails
+          album={props.album}
+          onClose={() => setShowDetails(false)}
         />
       </Modal>
     </React.Fragment>
